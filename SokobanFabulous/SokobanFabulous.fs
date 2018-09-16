@@ -129,8 +129,10 @@ module Game =
                 let newMap = model.map.Add(model.playerPos, Player rotatedDirection)
                 let cmd =
                     if rotations = 8 then
+                        // Finish winning spin and load next level
                         Cmd.ofMsg (LoadLevel (model.level+1))
                     else
+                        // Spin some more
                         levelCompleteCmd rotatedDirection (rotations+1)
                 { model with map = newMap }, cmd
 
@@ -150,7 +152,6 @@ module Game =
         | Treasure _ -> "crate_45"
 
     let view (model: Map) dispatch =
-        let current = Application.Current
         // Fit to screen
         let tileSize = getTileSize model
 

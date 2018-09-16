@@ -18,7 +18,7 @@ let rec aStar value g h neighbours goal start (openNodes: 'a list) (closedNodes:
 
             if openNodeAcc |> List.exists (isShorter currentNode) then //The current node is a shorter path than than one we already have.
                 let shorterPath = openNodeAcc |> List.filter (not << likeCurrent) //So remove the old one...
-                checkNeighbours  (currentNode::shorterPath)   //...and arry on with the new one.
+                checkNeighbours  (currentNode::shorterPath)   //...and carry on with the new one.
             elif not(containsCurrent closedNodes) && not(containsCurrent openNodeAcc) then //The current node has not been queried
                 checkNeighbours (currentNode::openNodeAcc) //So add it to the open set
             else checkNeighbours openNodeAcc // else carry on
