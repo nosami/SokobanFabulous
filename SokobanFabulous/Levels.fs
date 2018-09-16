@@ -891,8 +891,7 @@ let loadMapFromString (levelNumber:int) lines =
         let result =
             match sq with
             | Player _ -> { parseResult with playerPos = pos; map = newMap }
-            | Goal -> { parseResult with goalSquares = parseResult.goalSquares.Add pos; map = newMap }
-            | Treasure _ -> { parseResult with goalSquares = parseResult.goalSquares.Add pos; map = newMap}
+            | Goal | Treasure OnTarget -> { parseResult with goalSquares = parseResult.goalSquares.Add pos; map = newMap }
             | _ -> { parseResult with map = newMap }
 
         if colNumber < line.Length-1 then
