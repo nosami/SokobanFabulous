@@ -58,20 +58,16 @@ module Game =
         |> List.choose(fun (p, xdelta, ydelta) ->
             let oppositePoint = { x=model.playerPos.x + xdelta + xdelta; y=model.playerPos.y + ydelta + ydelta }
             match model.map.[oppositePoint] with
-            | Empty
-            | Goal -> Some p
+            | Empty | Goal -> Some p
             | _ -> None)
 
     let playSound (soundName:string) =
         let player = Plugin.SimpleAudioPlayer.CrossSimpleAudioPlayer.Current
         let assembly = typeof<Msg>.Assembly
-        let r = assembly.GetManifestResourceNames()
         let stream = assembly.GetManifestResourceStream("SokobanFabulous.Sounds." + soundName);
-
         player.Load stream |> ignore
         player.Play()
 
-    //let mutable screenWidth = 0.0
     let update msg model =
         let newModel, cmd =
             match msg with

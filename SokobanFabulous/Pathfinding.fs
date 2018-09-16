@@ -35,20 +35,6 @@ let rec aStar value g h neighbours goal start (openNodes: 'a list) (closedNodes:
             aStar value g h neighbours goal start nextSet (nextSet.Head::closedNodes)
         else None //if there are no op
 
-
-type Grid = Map<Point, Square>
-
-type Map =
-    { pushableTreasure: Point option
-      playerPos:Point
-      level:int
-      width:int
-      height:int
-      map:Grid
-      path:(Point * Direction) list
-      goalSquares:Set<Point>
-      maximumLevelReached: int }
-
 //a wrapper for mapPoint that can contain pathing data as per typical A* pathfinding
 type PathingNode =  
     { point:Point; direction:Direction; h:float; g:float; parent:PathingNode option;} //g = cost of path so far, h = estimated cost to goal, parent = tile we came here from                

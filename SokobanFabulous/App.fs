@@ -31,7 +31,7 @@ type App () as app =
     let deserialize str  =
         let bytes = Convert.FromBase64String(str)
         use stream = new MemoryStream(bytes)
-        BinaryFormatter().Deserialize(stream) :?> Utils.Map
+        BinaryFormatter().Deserialize(stream) :?> Levels.Map
 
     override __.OnSleep() = 
         let json = serialize runner.CurrentModel
