@@ -114,7 +114,7 @@ module Game =
                     playSound "walk.mp3"
                     { model with playerPos=point; map = newMap; path=t; }, followPathCmd
                 | [] -> model, Cmd.none
-            | Reset -> init model.level
+            | Reset -> model, Cmd.ofMsg (LoadLevel model.level)
             | LoadLevel level ->
                 let newModel, cmd = init level
                 // preserve the maximum level reached
@@ -127,14 +127,14 @@ module Game =
                     | Down -> Left
                     | Left -> Up
                 let newMap = model.map.Add(model.playerPos, Player rotatedDirection)
-                let cmd =
+                let cmd, level =
                     if rotations = 8 then
                         // Finish winning spin and load next level
-                        Cmd.ofMsg (LoadLevel (model.level+1))
+                        Cmd.ofMsg (LoadLevel (model.level+1)), model.level + 1
                     else
                         // Spin some more
-                        levelCompleteCmd rotatedDirection (rotations+1)
-                { model with map = newMap }, cmd
+                        levelCompleteCmd rotatedDirection (rotations+1), model.level
+                { model with map = newMap; maximumLevelReached = max level model.maximumLevelReached }, cmd
 
         match pushableTreasure newModel with
         | [ onlyOne ] -> { newModel with pushableTreasure = Some onlyOne }, cmd
