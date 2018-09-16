@@ -80,7 +80,6 @@ module Game =
             | TryPush treasurePoint ->
                 // Try and push treasure into an empty spot or the goal
                 let emptySpot =
-                    let neighbours = getNeighboursOf model treasurePoint
                     getNeighboursOf model treasurePoint
                     |> List.tryPick(fun (p, xdelta, ydelta, direction) ->
                         let oppositePoint = { x=treasurePoint.x + xdelta * -1; y=treasurePoint.y + ydelta * -1 }
@@ -148,8 +147,7 @@ module Game =
         | Wall -> "block_06" 
         | Dead -> "outside_96"
         | Goal -> "environment_09"
-        | Treasure NotOnTarget -> "crate_45"
-        | Treasure OnTarget -> "crate_45"
+        | Treasure _ -> "crate_45"
 
     let view (model: Map) dispatch =
         let current = Application.Current
@@ -159,8 +157,8 @@ module Game =
         let getImageForSquare sq row col =
             let command =
                 match sq with
-                | Treasure _ -> TryPush {y=row; x = col} 
-                | _ -> TryFindPath {y=row; x = col}
+                | Treasure _ -> TryPush { y=row; x = col } 
+                | _ -> TryFindPath { y=row; x = col }
 
             View.Image(gestureRecognizers=[View.TapGestureRecognizer(command=(fun () -> dispatch (command))) ])
                 .ImageSource(squareImage sq)
