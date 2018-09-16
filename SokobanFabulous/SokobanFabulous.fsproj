@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.5.2" />
+    <!-- workaround for VSMac bug https://github.com/mono/monodevelop/pull/5137 -->
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Script.fsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sounds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Levels.fs" />
+    <Compile Include="Pathfinding.fs" />
+    <Compile Include="SokobanFabulous.fs" />
+    <Compile Include="App.fs" />
+    <EmbeddedResource Include="Sounds\walk.mp3" />
+    <EmbeddedResource Include="Sounds\push_box.mp3" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
+    <PackageReference Include="FSharp.Core" Version="4.5.2" />
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.1.0" />
+    <PackageReference Include="Fabulous.Core" Version="0.20.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="0.10.0-preview" />
+  </ItemGroup>
+</Project>
